@@ -1,19 +1,36 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using TestApp.Import.Interfaces;
 
 namespace TestApp.Client.Models
 {
     internal class MainWindowContext : ViewModelBase
     {
+        private Microsoft.Win32.OpenFileDialog _openDialog;
+        private readonly IFileUploader _fileUploader;
+
         public ICommand CloseAppCommand { get; set; }
+        public ICommand ImportCommand { get; set; }
         public bool CanCloseAppFlag { get; set; }
 
-        public MainWindowContext()
+        public MainWindowContext(IFileUploader fileUploader)
         {
+            _fileUploader = fileUploader;
             CanCloseAppFlag = true;
             CloseAppCommand = new RelayCommand(CloseApp, CanCloseApp);
+            ImportCommand = new RelayCommand(Import);
+            _openDialog = new Microsoft.Win32.OpenFileDialog();
+        }
+
+        private void Import()
+        {
+            if (_openDialog.ShowDialog() == true)
+            {
+
+            }
         }
 
         /// <summary>
