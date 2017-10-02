@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Windows;
 using Ninject;
+using TestApp.Client.Models;
 using TestApp.Domain;
 using TestApp.Import;
 using TestApp.Import.Interfaces;
@@ -17,11 +18,17 @@ namespace TestApp.Client
         private const int APP_WINDOW_WIDTH = 800;
         private const int APP_WINDOW_HEIGHT = 500;
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Application startup
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             ConfigureContainer();
             ComposeInterface();
+            Current.MainWindow.DataContext = _container.Get<MainViewModel>();
             Current.MainWindow.Show();
         }
 

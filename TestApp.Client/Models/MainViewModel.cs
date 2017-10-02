@@ -7,7 +7,7 @@ using TestApp.Import.Interfaces;
 
 namespace TestApp.Client.Models
 {
-    internal class MainWindowContext : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private Microsoft.Win32.OpenFileDialog _openDialog;
         private readonly IFileUploader _fileUploader;
@@ -16,20 +16,27 @@ namespace TestApp.Client.Models
         public ICommand ImportCommand { get; set; }
         public bool CanCloseAppFlag { get; set; }
 
-        public MainWindowContext(IFileUploader fileUploader)
+        public MainViewModel(IFileUploader fileUploader)
         {
             _fileUploader = fileUploader;
             CanCloseAppFlag = true;
             CloseAppCommand = new RelayCommand(CloseApp, CanCloseApp);
             ImportCommand = new RelayCommand(Import);
-            _openDialog = new Microsoft.Win32.OpenFileDialog();
+            _openDialog = new Microsoft.Win32.OpenFileDialog { Filter = "XML Files (*.xml)|*.xml" };
         }
 
         private void Import()
         {
             if (_openDialog.ShowDialog() == true)
             {
-
+                try
+                {
+                    _fileUploader.UploadFile(_openDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Import error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
