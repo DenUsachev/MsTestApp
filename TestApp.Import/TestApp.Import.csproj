@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="DataRepository.cs" />
+    <Compile Include="FileUploader.cs" />
+    <Compile Include="Interfaces\IFileUploader.cs" />
     <Compile Include="Interfaces\IDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

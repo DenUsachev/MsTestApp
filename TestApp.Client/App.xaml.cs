@@ -32,6 +32,7 @@ namespace TestApp.Client
         {
             _container = new StandardKernel();
             _container.Bind<DbContext>().To<DataContext>().InTransientScope();
+            _container.Bind<IFileUploader>().To<FileUploader>();
             _container.Bind<IDataRepository<CustomerEntry>>().To<DataRepository>().InTransientScope();
         }
 
