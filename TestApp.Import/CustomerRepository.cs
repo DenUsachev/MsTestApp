@@ -11,6 +11,7 @@ namespace TestApp.Import
     public class CustomerRepository : IDataRepository<CustomerEntry>
     {
         private readonly DataContext _context;
+        private const int DAILY_CUSTOMER_AMOUNT_LIMIT = 1000;
 
         public CustomerRepository(DataContext context)
         {
@@ -28,15 +29,26 @@ namespace TestApp.Import
         }
 
         /// <summary>
+        /// Gets the entity by its key
+        /// </summary>
+        /// <param name="id">Entity key</param>
+        /// <returns></returns>
+        private Customer GetCustomer(int id)
+        {
+            return _context.Customers.
+                SingleOrDefault(it => it.Id == id);
+        }
+
+        /// <summary>
         /// Adds new entity to the DB
         /// </summary>
         /// <param name="entry">Entity object</param>
-        public void Add(CustomerEntry entry)
+        public bool Add(CustomerEntry entry)
         {
+            
             var presentCustomer = _context.Customers.SingleOrDefault(it => it.CustomerNo == entry.CustomerNo);
             if (presentCustomer != null)
             {
-
                 entry.Customer = presentCustomer;
             }
             else
@@ -48,6 +60,7 @@ namespace TestApp.Import
             }
             _context.CustomerEntries.Add(entry);
             _context.SaveChanges();
+            return true;
         }
 
         /// <summary>

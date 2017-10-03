@@ -6,7 +6,7 @@ namespace TestApp.Import.Interfaces
     {
         T Get(int id);
 
-        void Add(T entry);
+        bool Add(T entry);
 
         void Delete(T entry);
 

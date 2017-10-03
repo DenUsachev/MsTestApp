@@ -20,6 +20,8 @@ namespace TestApp.Import
                 .HasRequired<Customer>(c => c.Customer)
                 .WithMany(ce => ce.Entries)
                 .HasForeignKey(c => c.CustomerId);
+            modelBuilder.Entity<Customer>()
+                .HasMany(e => e.Entries);
         }
     }
 }

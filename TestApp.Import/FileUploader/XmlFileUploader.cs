@@ -22,7 +22,18 @@ namespace TestApp.Import.FileUploader
             foreach (XmlNode node in nodes)
             {
                 var entry = XmlFileEntry.FromXmlNode(node).ToCustomerEntry();
-                _repository.Add(entry);
+                IList<string> validationMessages;
+                if (ValidateEntry(entry, out validationMessages))
+                {
+                    _repository.Add(entry);
+                }
+                else
+                {
+                    foreach (var validationMessage in validationMessages)
+                    {
+                        RaiseLogEvent(validationMessage);
+                    }
+                }
             }
         }
     }
