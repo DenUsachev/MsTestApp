@@ -61,6 +61,11 @@ namespace TestApp.Client.Models
             }
         }
 
+        /// <summary>
+        /// Logs an import event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventText">The text of the message</param>
         private void LogEvent(object sender, string eventText)
         {
             _logEntries.Add(new LogEntry(DateTime.Now, eventText));
