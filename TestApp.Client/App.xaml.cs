@@ -20,11 +20,10 @@ namespace TestApp.Client
 
         public static IKernel Container { get; protected set; }
 
-        /// <inheritdoc />
         /// <summary>
         /// Application startup
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Startup event agruments</param>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

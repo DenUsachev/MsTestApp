@@ -4,7 +4,7 @@ namespace TestApp.Import.Interfaces
 {
     public interface IDataRepository<T> where T : class
     {
-        T Get(Guid id);
+        T Get(int id);
 
         void Add(T entry);
 

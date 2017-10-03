@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using TestApp.Domain;
 using TestApp.Import.Interfaces;
 
 namespace TestApp.Import
 {
+    /// <summary>
+    /// Manages  the databaes of an application
+    /// </summary>
     public class CustomerRepository : IDataRepository<CustomerEntry>
     {
         private readonly DataContext _context;
@@ -15,9 +17,9 @@ namespace TestApp.Import
             _context = context;
         }
 
-        public CustomerEntry Get(Guid id)
+        public CustomerEntry Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.CustomerEntries.SingleOrDefault(it => it.Id == id);
         }
 
         public void Add(CustomerEntry entry)
@@ -25,15 +27,12 @@ namespace TestApp.Import
             var presentCustomer = _context.Customers.SingleOrDefault(it => it.CustomerNo == entry.CustomerNo);
             if (presentCustomer != null)
             {
+
                 entry.Customer = presentCustomer;
             }
             else
             {
-                var newCustomer = new Customer()
-                {
-                    CreatedAt = DateTime.Now,
-                    CustomerNo = entry.CustomerNo,
-                };
+                var newCustomer = new Customer { CreatedAt = DateTime.Now, CustomerNo = entry.CustomerNo };
                 _context.Customers.Add(newCustomer);
                 _context.SaveChanges();
                 entry.Customer = newCustomer;
@@ -44,12 +43,22 @@ namespace TestApp.Import
 
         public void Delete(CustomerEntry entry)
         {
-            throw new NotImplementedException();
+            var presentEntry = _context.CustomerEntries.SingleOrDefault(it => it.Id == entry.Id);
+            if (presentEntry != null)
+            {
+                _context.CustomerEntries.Remove(entry);
+                _context.SaveChanges();
+            }
         }
 
         public void Update(CustomerEntry entry)
         {
-            throw new NotImplementedException();
+            var presentEntry = _context.CustomerEntries.SingleOrDefault(it => it.Id == entry.Id);
+            if (presentEntry != null)
+            {
+                _context.Entry(entry).CurrentValues.SetValues(entry);
+                _context.SaveChanges();
+            }
         }
     }
 }
