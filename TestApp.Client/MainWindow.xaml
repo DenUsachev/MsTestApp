@@ -3,21 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:models="clr-namespace:TestApp.Client.Models"
         x:Class="TestApp.Client.MainWindow"
         mc:Ignorable="d"
        Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="24"></RowDefinition>
+            <RowDefinition Height="24"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Application">
                 <MenuItem Header="Import" Command="{Binding ImportCommand}" />
+                <MenuItem Header="Clear log" Command="{Binding ClearLogCommand}" />
                 <MenuItem Header="Exit" Command="{Binding CloseAppCommand}" />
             </MenuItem>
         </Menu>
+        <TextBlock Grid.Row="1" Margin="5,5,0,0" Text="Operations log:"></TextBlock>
+        <DataGrid ItemsSource="{Binding LogEntries}" AutoGenerateColumns="False" Margin="5" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="150" Header="Date" Binding="{Binding EventDate}"  />
+                <DataGridTextColumn Width="*"  Header="Event" Binding="{Binding EventMessage}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
 

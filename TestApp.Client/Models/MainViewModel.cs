@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Ninject;
+using TestApp.Domain;
 using TestApp.Import.Interfaces;
 
 namespace TestApp.Client.Models
@@ -13,7 +15,13 @@ namespace TestApp.Client.Models
     {
         private readonly Microsoft.Win32.OpenFileDialog _openDialog;
         private IFileUploader _fileUploader;
+        private ObservableCollection<LogEntry> _logEntries;
 
+        public ObservableCollection<LogEntry> LogEntries
+        {
+            get { return _logEntries; }
+            set { RaisePropertyChanged(nameof(LogEntries), _logEntries, value, true); }
+        }
         public ICommand CloseAppCommand { get; set; }
         public ICommand ImportCommand { get; set; }
         public bool CanCloseAppFlag { get; set; }
@@ -23,6 +31,8 @@ namespace TestApp.Client.Models
             CanCloseAppFlag = true;
             CloseAppCommand = new RelayCommand(CloseApp, CanCloseApp);
             ImportCommand = new RelayCommand(Import);
+            _logEntries = new ObservableCollection<LogEntry>();
+            _logEntries.Add(new LogEntry(DateTime.Now, "Application started"));
             _openDialog = new Microsoft.Win32.OpenFileDialog { Filter = "XML Files (*.xml)|*.xml|CSV Files (*.csv)|*.csv" };
         }
 
@@ -37,13 +47,23 @@ namespace TestApp.Client.Models
                 {
                     var resolveKey = Path.GetExtension(_openDialog.FileName).Substring(1);
                     _fileUploader = App.Container.Get<IFileUploader>(resolveKey);
+                    _fileUploader.OnEventLogged += LogEvent;
                     _fileUploader.UploadFile(_openDialog.FileName);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Import error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    LogEntries.Add(new LogEntry(DateTime.Now, ex.Message));
+                }
+                finally
+                {
+                    _fileUploader.OnEventLogged -= LogEvent;
                 }
             }
+        }
+
+        private void LogEvent(object sender, string eventText)
+        {
+            _logEntries.Add(new LogEntry(DateTime.Now, eventText));
         }
 
         /// <summary>
