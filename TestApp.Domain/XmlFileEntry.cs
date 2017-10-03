@@ -7,12 +7,8 @@ namespace TestApp.Domain
     /// <summary>
     /// Describes an entry of the XML file
     /// </summary>
-    public class XmlFileEntry
+    public class XmlFileEntry : FileEntryBase
     {
-        public string CustomerNo { get; set; }
-        public DateTime PostingDate { get; set; }
-        public decimal Amount { get; set; }
-
         /// <summary>
         /// Performs data parsing of XML subnodes 
         /// </summary>

@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvFileEntry.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerEntry.cs" />
+    <Compile Include="FileEntryBase.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlFileEntry.cs" />

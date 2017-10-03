@@ -3,9 +3,9 @@
     /// <summary>
     /// Extensions for the XML files for convenience
     /// </summary>
-    public static class XmlFileEntryExtensions
+    public static class FileEntryExtensions
     {
-        public static CustomerEntry ToCustomerEntry(this XmlFileEntry entry)
+        public static CustomerEntry ToCustomerEntry(this FileEntryBase entry)
         {
             return new CustomerEntry
             {

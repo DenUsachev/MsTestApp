@@ -11,7 +11,6 @@ namespace TestApp.Import
     public class CustomerRepository : IDataRepository<CustomerEntry>
     {
         private readonly DataContext _context;
-        private const int DAILY_CUSTOMER_AMOUNT_LIMIT = 1000;
 
         public CustomerRepository(DataContext context)
         {
@@ -45,7 +44,7 @@ namespace TestApp.Import
         /// <param name="entry">Entity object</param>
         public bool Add(CustomerEntry entry)
         {
-            
+
             var presentCustomer = _context.Customers.SingleOrDefault(it => it.CustomerNo == entry.CustomerNo);
             if (presentCustomer != null)
             {

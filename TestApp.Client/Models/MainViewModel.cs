@@ -15,7 +15,7 @@ namespace TestApp.Client.Models
     {
         private readonly Microsoft.Win32.OpenFileDialog _openDialog;
         private IFileUploader _fileUploader;
-        private ObservableCollection<LogEntry> _logEntries;
+        private readonly ObservableCollection<LogEntry> _logEntries;
 
         public ObservableCollection<LogEntry> LogEntries
         {
@@ -24,6 +24,7 @@ namespace TestApp.Client.Models
         }
         public ICommand CloseAppCommand { get; set; }
         public ICommand ImportCommand { get; set; }
+        public ICommand ClearLogCommand { get; set; }
         public bool CanCloseAppFlag { get; set; }
 
         public MainViewModel()
@@ -31,9 +32,27 @@ namespace TestApp.Client.Models
             CanCloseAppFlag = true;
             CloseAppCommand = new RelayCommand(CloseApp, CanCloseApp);
             ImportCommand = new RelayCommand(Import);
+            ClearLogCommand = new RelayCommand(ClearLog, CanClearLog);
             _logEntries = new ObservableCollection<LogEntry>();
             _logEntries.Add(new LogEntry(DateTime.Now, "Application started"));
             _openDialog = new Microsoft.Win32.OpenFileDialog { Filter = "XML Files (*.xml)|*.xml|CSV Files (*.csv)|*.csv" };
+        }
+
+        /// <summary>
+        /// Determines, whether the user can clear the log or not
+        /// </summary>
+        /// <returns></returns>
+        private bool CanClearLog()
+        {
+            return _logEntries.Count > 0;
+        }
+
+        /// <summary>
+        /// Clears operations log
+        /// </summary>
+        private void ClearLog()
+        {
+            _logEntries.Clear();
         }
 
         /// <summary>
@@ -57,6 +76,7 @@ namespace TestApp.Client.Models
                 finally
                 {
                     _fileUploader.OnEventLogged -= LogEvent;
+                    LogEvent(this, "File import complete.");
                 }
             }
         }

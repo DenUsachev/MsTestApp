@@ -2,6 +2,9 @@
 
 namespace TestApp.Domain
 {
+    /// <summary>
+    /// Describes log message
+    /// </summary>
     public class LogEntry
     {
         public DateTime EventDate { get; set; }

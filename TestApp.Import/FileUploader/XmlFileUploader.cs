@@ -1,19 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Xml;
+﻿using System.Xml;
 using TestApp.Domain;
 
 namespace TestApp.Import.FileUploader
 {
+    /// <summary>
+    /// Parses an XML file and uploads its records into DB.
+    /// </summary>
     public class XmlFileUploader : FileUploaderBase
     {
         private const string XPATH_LOOKUP_PATTERN = "/TableA/Entry";
-        private readonly CustomerRepository _repository;
 
         public XmlFileUploader(CustomerRepository repository)
         {
-            _repository = repository;
+            Repository = repository;
         }
 
+        /// <summary>
+        /// Reads XML file and saves it contents to the DB
+        /// </summary>
+        /// <param name="filepath">Import file path</param>
         public override void UploadFile(string filepath)
         {
             var doc = new XmlDocument();
@@ -22,18 +27,7 @@ namespace TestApp.Import.FileUploader
             foreach (XmlNode node in nodes)
             {
                 var entry = XmlFileEntry.FromXmlNode(node).ToCustomerEntry();
-                IList<string> validationMessages;
-                if (ValidateEntry(entry, out validationMessages))
-                {
-                    _repository.Add(entry);
-                }
-                else
-                {
-                    foreach (var validationMessage in validationMessages)
-                    {
-                        RaiseLogEvent(validationMessage);
-                    }
-                }
+                SaveEntry(entry);
             }
         }
     }

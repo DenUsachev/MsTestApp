@@ -2,6 +2,9 @@
 
 namespace TestApp.Import.Interfaces
 {
+    /// <summary>
+    /// File uploader interface
+    /// </summary>
     public interface IFileUploader
     {
         event EventHandler<string> OnEventLogged;
