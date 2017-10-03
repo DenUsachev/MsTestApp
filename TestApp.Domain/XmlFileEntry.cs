@@ -4,6 +4,9 @@ using System.Xml;
 
 namespace TestApp.Domain
 {
+    /// <summary>
+    /// Describes an entry of the XML file
+    /// </summary>
     public class XmlFileEntry
     {
         public string CustomerNo { get; set; }

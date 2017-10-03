@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestApp.Domain
 {
+    /// <summary>
+    /// Describes the Customer entry in the DB
+    /// </summary>
     public class Customer
     {
         [Key]

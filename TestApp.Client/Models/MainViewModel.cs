@@ -26,6 +26,9 @@ namespace TestApp.Client.Models
             _openDialog = new Microsoft.Win32.OpenFileDialog { Filter = "XML Files (*.xml)|*.xml|CSV Files (*.csv)|*.csv" };
         }
 
+        /// <summary>
+        /// Performs the file import routine
+        /// </summary>
         private void Import()
         {
             if (_openDialog.ShowDialog() == true)
