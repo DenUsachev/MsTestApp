@@ -36,6 +36,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -48,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="DataRepository.cs" />
-    <Compile Include="FileUploader.cs" />
+    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="FileUploader\CsvFileUploader.cs" />
+    <Compile Include="FileUploader\FileUploaderBase.cs" />
+    <Compile Include="FileUploader\XmlFileUploader.cs" />
     <Compile Include="Interfaces\IFileUploader.cs" />
     <Compile Include="Interfaces\IDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

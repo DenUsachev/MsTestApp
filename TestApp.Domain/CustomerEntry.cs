@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestApp.Domain
 {
@@ -12,6 +13,8 @@ namespace TestApp.Domain
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public DateTime PostingDate { get; set; }
+        [NotMapped]
+        public string CustomerNo { get; set; }
         public decimal Amount { get; set; }
 
         public Customer Customer { get; set; }

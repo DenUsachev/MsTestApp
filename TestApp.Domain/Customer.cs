@@ -8,7 +8,7 @@ namespace TestApp.Domain
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string CustomerNo { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public ICollection<CustomerEntry> Entries { get; set; }
